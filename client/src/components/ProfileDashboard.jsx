@@ -87,16 +87,49 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
     });
   }, [profile]);
 
+  // Load saved career vision from localStorage on profile change
+  useEffect(() => {
+    const userId = profile.id || "demo-user";
+    const CAREER_KEY = `careerVision_${userId}`;
+    
+    const saved = localStorage.getItem(CAREER_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        
+        setProfile(prev => ({
+          ...prev,
+          careerVision: {
+            bestDescription: parsed.bestDescription || "",
+            aspiration: parsed.aspiration || "",
+            field: parsed.field || "",
+            inspiration: parsed.inspiration || "",
+            currentAim: parsed.currentAim || ""
+          }
+        }));
+      } catch (error) {
+        console.error('Error parsing saved career vision:', error);
+      }
+    }
+  }, [profile.id]); // Only run when profile.id changes
+
   const fetchProfile = async () => {
     try {
       const res = await API.get("/profile/demo");
+      
+      // Get saved career vision from localStorage before updating profile
+      const userId = res.data.id || "demo-user";
+      const CAREER_KEY = `careerVision_${userId}`;
+      const savedCareerVision = localStorage.getItem(CAREER_KEY);
+      const parsedSavedCareer = savedCareerVision ? JSON.parse(savedCareerVision) : null;
+      
       const normalized = {
         ...res.data,
         education: res.data.education || [],
         certifications: res.data.certifications || [],
         experience: res.data.experience || [],
         skills: res.data.skills || [],
-        careerVision: {
+        careerVision: parsedSavedCareer || {
           bestDescription: res.data.careerVision?.bestDescription || "",
           aspiration: res.data.careerVision?.aspiration || "",
           field: res.data.careerVision?.field || "",
@@ -364,6 +397,13 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
                           certifications: res.data.certifications ?? prev.certifications ?? [],
                           experience: res.data.experience ?? prev.experience ?? [],
                           skills: res.data.skills ?? prev.skills ?? [],
+                          careerVision: prev.careerVision ?? {
+                            bestDescription: "",
+                            aspiration: "",
+                            field: "",
+                            inspiration: "",
+                            currentAim: ""
+                          },
                           career: res.data.career ?? prev.career ?? {
                             type: "",
                             aspiration: "",
@@ -420,7 +460,14 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
                         education: res.data.education ?? prev.education ?? [],
                         certifications: res.data.certifications ?? prev.certifications ?? [],
                         experience: res.data.experience ?? prev.experience ?? [],
-                        skills: res.data.skills ?? prev.skills ?? []
+                        skills: res.data.skills ?? prev.skills ?? [],
+                        careerVision: prev.careerVision ?? {
+                          bestDescription: "",
+                          aspiration: "",
+                          field: "",
+                          inspiration: "",
+                          currentAim: ""
+                        }
                       }));
 
                       // Emit socket event to notify other clients
@@ -468,7 +515,14 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
                         education: res.data.education ?? prev.education ?? [],
                         certifications: res.data.certifications ?? prev.certifications ?? [],
                         experience: res.data.experience ?? prev.experience ?? [],
-                        skills: res.data.skills ?? prev.skills ?? []
+                        skills: res.data.skills ?? prev.skills ?? [],
+                        careerVision: prev.careerVision ?? {
+                          bestDescription: "",
+                          aspiration: "",
+                          field: "",
+                          inspiration: "",
+                          currentAim: ""
+                        }
                       }));
 
                       // Emit socket event to notify other clients
@@ -502,13 +556,20 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       editExp={editExp}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
+        
+        // Get saved career vision from localStorage before updating profile
+        const userId = res.data.id || "demo-user";
+        const CAREER_KEY = `careerVision_${userId}`;
+        const savedCareerVision = localStorage.getItem(CAREER_KEY);
+        const parsedSavedCareer = savedCareerVision ? JSON.parse(savedCareerVision) : null;
+        
         const normalized = {
           ...res.data,
           education: res.data.education || [],
           certifications: res.data.certifications || [],
           experience: res.data.experience || [],
           skills: res.data.skills || [],
-          careerVision: {
+          careerVision: parsedSavedCareer || {
             bestDescription: res.data.careerVision?.bestDescription || "",
             aspiration: res.data.careerVision?.aspiration || "",
             field: res.data.careerVision?.field || "",
@@ -537,13 +598,20 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       editEdu={editEdu}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
+        
+        // Get saved career vision from localStorage before updating profile
+        const userId = res.data.id || "demo-user";
+        const CAREER_KEY = `careerVision_${userId}`;
+        const savedCareerVision = localStorage.getItem(CAREER_KEY);
+        const parsedSavedCareer = savedCareerVision ? JSON.parse(savedCareerVision) : null;
+        
         const normalized = {
           ...res.data,
           education: res.data.education || [],
           certifications: res.data.certifications || [],
           experience: res.data.experience || [],
           skills: res.data.skills || [],
-          careerVision: {
+          careerVision: parsedSavedCareer || {
             bestDescription: res.data.careerVision?.bestDescription || "",
             aspiration: res.data.careerVision?.aspiration || "",
             field: res.data.careerVision?.field || "",
@@ -572,13 +640,20 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       editCert={editCert}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
+        
+        // Get saved career vision from localStorage before updating profile
+        const userId = res.data.id || "demo-user";
+        const CAREER_KEY = `careerVision_${userId}`;
+        const savedCareerVision = localStorage.getItem(CAREER_KEY);
+        const parsedSavedCareer = savedCareerVision ? JSON.parse(savedCareerVision) : null;
+        
         const normalized = {
           ...res.data,
           education: res.data.education || [],
           certifications: res.data.certifications || [],
           experience: res.data.experience || [],
           skills: res.data.skills || [],
-          careerVision: {
+          careerVision: parsedSavedCareer || {
             bestDescription: res.data.careerVision?.bestDescription || "",
             aspiration: res.data.careerVision?.aspiration || "",
             field: res.data.careerVision?.field || "",
@@ -603,13 +678,20 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       profile={profile}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
+        
+        // Get saved career vision from localStorage before updating profile
+        const userId = res.data.id || "demo-user";
+        const CAREER_KEY = `careerVision_${userId}`;
+        const savedCareerVision = localStorage.getItem(CAREER_KEY);
+        const parsedSavedCareer = savedCareerVision ? JSON.parse(savedCareerVision) : null;
+        
         const normalized = {
           ...res.data,
           education: res.data.education || [],
           certifications: res.data.certifications || [],
           experience: res.data.experience || [],
           skills: res.data.skills || [],
-          careerVision: {
+          careerVision: parsedSavedCareer || {
             bestDescription: res.data.careerVision?.bestDescription || "",
             aspiration: res.data.careerVision?.aspiration || "",
             field: res.data.careerVision?.field || "",
@@ -634,13 +716,20 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       profile={profile}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
+        
+        // Get saved career vision from localStorage before updating profile
+        const userId = res.data.id || "demo-user";
+        const CAREER_KEY = `careerVision_${userId}`;
+        const savedCareerVision = localStorage.getItem(CAREER_KEY);
+        const parsedSavedCareer = savedCareerVision ? JSON.parse(savedCareerVision) : null;
+        
         const normalized = {
           ...res.data,
           education: res.data.education || [],
           certifications: res.data.certifications || [],
           experience: res.data.experience || [],
           skills: res.data.skills || [],
-          careerVision: {
+          careerVision: parsedSavedCareer || {
             bestDescription: res.data.careerVision?.bestDescription || "",
             aspiration: res.data.careerVision?.aspiration || "",
             field: res.data.careerVision?.field || "",
@@ -665,13 +754,20 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       profile={profile}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
+        
+        // Get saved career vision from localStorage before updating profile
+        const userId = res.data.id || "demo-user";
+        const CAREER_KEY = `careerVision_${userId}`;
+        const savedCareerVision = localStorage.getItem(CAREER_KEY);
+        const parsedSavedCareer = savedCareerVision ? JSON.parse(savedCareerVision) : null;
+        
         const normalized = {
           ...res.data,
           education: res.data.education || [],
           certifications: res.data.certifications || [],
           experience: res.data.experience || [],
           skills: res.data.skills || [],
-          careerVision: {
+          careerVision: parsedSavedCareer || {
             bestDescription: res.data.careerVision?.bestDescription || "",
             aspiration: res.data.careerVision?.aspiration || "",
             field: res.data.careerVision?.field || "",
@@ -762,10 +858,17 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
           </button>
           <button
             onClick={() => {
+              const updatedCareer = careerForm;
+              
               setProfile(prev => ({
                 ...prev,
-                careerVision: careerForm
+                careerVision: updatedCareer
               }));
+              
+              // Save to localStorage
+              const userId = profile.id || "demo-user";
+              const CAREER_KEY = `careerVision_${userId}`;
+              localStorage.setItem(CAREER_KEY, JSON.stringify(updatedCareer));
               
               setCareerModalOpen(false);
             }}
