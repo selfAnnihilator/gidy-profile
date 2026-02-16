@@ -17,19 +17,39 @@ const app = express();
 const server = http.createServer(app);
 
 // Enable CORS for both express and socket.io
+// ----- CORS CONFIG -----
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://gidy-profile-phi.vercel.app",
+  "https://gidy.vercel.app",
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+// Express CORS
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("Blocked by CORS:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+
+app.use(express.json());
+
+// Socket.io CORS
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:5174", "https://gidy.vercel.app"],
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   }
 });
-
-app.use(cors({
-  origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:5174", "https://gidy-profile-phi.vercel.app"],
-  credentials: true
-}));
-app.use(express.json());
 
 // Serve static files from uploads directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
