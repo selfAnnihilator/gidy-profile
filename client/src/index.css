@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --bg-primary: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --accent-blue: #3b82f6;
+}
+
+.dark {
+  --card-bg: #0f172a;        /* slate-900 */
+  --card-border: #1f2937;
+  --bg-primary: #020617;     /* slate-950 */
+  --text-primary: #e5e7eb;   /* slate-200 */
+  --text-secondary: #94a3b8; /* slate-400 */
+  --accent-blue: #3b82f6;    /* blue-500 */
+}
+
+.input {
+  @apply w-full border rounded-md px-3 py-2 text-sm;
+}
