@@ -53,15 +53,15 @@ export default function ExperienceItem({ exp, onDelete, onEdit }) {
 
         {/* text */}
         <div className="space-y-1">
-          <div className="font-medium text-gray-900">
+          <div className="font-medium text-[var(--text-primary)]">
             {exp.role}
           </div>
 
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-[var(--text-secondary)]">
             {exp.company}
           </div>
 
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-[var(--text-muted)]">
             Started: {format(exp.joinDate || exp.from)}
             {" — "}
             {exp.current ? "Present" : format(exp.leaveDate || exp.to)}
@@ -74,15 +74,15 @@ export default function ExperienceItem({ exp, onDelete, onEdit }) {
       <div className="relative" ref={menuRef}>
         <button
           onClick={() => toggleMenu(exp._id)}
-          className="p-1 rounded hover:bg-gray-100 cursor-pointer"
+          className="p-1 rounded hover:bg-[var(--bg-card)] cursor-pointer text-[var(--text-secondary)]"
         >
           ⋯
         </button>
-        
+
         {openMenuId === exp._id && (
-          <div className="absolute right-0 mt-1 w-44 bg-white rounded-xl shadow-lg border border-gray-100 p-1 space-y-1 z-50">
+          <div className="absolute right-0 mt-1 w-44 bg-[var(--bg-card)] rounded-xl shadow-lg border border-[var(--border)] p-1 space-y-1 z-50">
             <button
-              className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer"
+              className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-[var(--bg-card)] transition cursor-pointer text-[var(--text-primary)]"
               onClick={() => {
                 onEdit(exp);
                 setOpenMenuId(null);
@@ -91,7 +91,7 @@ export default function ExperienceItem({ exp, onDelete, onEdit }) {
               Edit experience
             </button>
             <button
-              className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer text-red-600"
+              className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-[var(--bg-card)] transition cursor-pointer text-red-600"
               onClick={async () => {
                 await onDelete(exp._id);
                 setOpenMenuId(null);

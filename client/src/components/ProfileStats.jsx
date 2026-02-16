@@ -22,28 +22,28 @@ export default function ProfileStats({ profile }) {
   const lastUpdated = new Date().toLocaleDateString();
 
   return (
-    <div className="bg-white dark:bg-[#111c2d] rounded-2xl shadow-sm border border-gray-100 dark:border-[#1f2a3a] p-6 hover:shadow-md transition">
-      <h3 className="font-semibold text-gray-900 dark:text-[#e5e7eb] mb-4">Profile Insights</h3>
+    <div className="bg-[var(--bg-card)] rounded-2xl shadow-sm border border-[var(--border)] p-6 hover:shadow-md transition">
+      <h3 className="font-semibold text-[var(--text-primary)] mb-4">Profile Insights</h3>
 
       <div className="grid grid-cols-2 gap-4">
-        <div className="bg-gray-50 dark:bg-[#162338] rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-[#1a2840] transition">
+        <div className="bg-[var(--bg-card)] rounded-xl p-4 hover:bg-[var(--bg-card)] transition">
           <div className="text-2xl font-semibold text-blue-600">{totalExperience}</div>
-          <div className="text-xs text-gray-500 dark:text-[#94a3b8] mt-1">Experience</div>
+          <div className="text-xs text-[var(--text-secondary)] mt-1">Experience</div>
         </div>
 
-        <div className="bg-gray-50 dark:bg-[#162338] rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-[#1a2840] transition">
+        <div className="bg-[var(--bg-card)] rounded-xl p-4 hover:bg-[var(--bg-card)] transition">
           <div className="text-2xl font-semibold text-blue-600">{totalSkills}</div>
-          <div className="text-xs text-gray-500 dark:text-[#94a3b8] mt-1">Skills</div>
+          <div className="text-xs text-[var(--text-secondary)] mt-1">Skills</div>
         </div>
 
-        <div className="bg-gray-50 dark:bg-[#162338] rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-[#1a2840] transition">
+        <div className="bg-[var(--bg-card)] rounded-xl p-4 hover:bg-[var(--bg-card)] transition">
           <div className="text-2xl font-semibold text-blue-600">{completeness}%</div>
-          <div className="text-xs text-gray-500 dark:text-[#94a3b8] mt-1">Complete</div>
+          <div className="text-xs text-[var(--text-secondary)] mt-1">Complete</div>
         </div>
 
-        <div className="bg-gray-50 dark:bg-[#162338] rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-[#1a2840] transition">
-          <div className="text-xs text-gray-500 dark:text-[#94a3b8] truncate">{lastUpdated}</div>
-          <div className="text-xs text-gray-500 dark:text-[#94a3b8] mt-1">Updated</div>
+        <div className="bg-[var(--bg-card)] rounded-xl p-4 hover:bg-[var(--bg-card)] transition">
+          <div className="text-xs text-[var(--text-secondary)] truncate">{lastUpdated}</div>
+          <div className="text-xs text-[var(--text-secondary)] mt-1">Updated</div>
         </div>
       </div>
     </div>

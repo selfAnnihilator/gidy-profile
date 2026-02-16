@@ -65,7 +65,7 @@ export default function App() {
 
   return (
     <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] transition-colors">
+      <div className="min-h-screen bg-[var(--bg-main)] transition-colors">
 
         <Navbar dark={dark} setDark={setDark} profile={profile} />
 

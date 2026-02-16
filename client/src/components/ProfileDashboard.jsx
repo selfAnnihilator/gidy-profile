@@ -161,7 +161,7 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
     <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
 
       {/* PROFILE HEADER */}
-      <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-7">
+      <div className="relative bg-[var(--bg-card)] rounded-2xl shadow-sm hover:shadow-md transition-shadow p-7 border border-[var(--border)]">
         <div className="flex flex-col md:flex-row gap-7">
           <div className="flex-shrink-0 flex justify-center md:justify-start">
             {!avatarError && (profile.avatarUrl || profile.image) ? (
@@ -180,8 +180,8 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
           <div className="flex-grow">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">{profile.name || "Your Name"}</h1>
-                <p className="text-sm text-gray-500 space-y-1 mt-1">{profile.title || "Add your headline"}</p>
+                <h1 className="text-xl font-semibold text-[var(--text-primary)]">{profile.name || "Your Name"}</h1>
+                <p className="text-sm text-[var(--text-secondary)] space-y-1 mt-1">{profile.title || "Add your headline"}</p>
 
                 <div className="mt-3 flex gap-2">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
@@ -189,23 +189,23 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
                   </span>
                 </div>
 
-                <p className="mt-3 text-gray-600 max-w-2xl leading-relaxed">
+                <p className="mt-3 text-[var(--text-secondary)] max-w-2xl leading-relaxed">
                   {profile.bio || "Add a short bio about yourself"}
                 </p>
               </div>
-              
+
             </div>
-            
+
             <div className="mt-5 flex flex-wrap gap-4">
               {profile.email && (
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
+                <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                  <svg className="w-4 h-4 text-[var(--text-muted)]" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
                   {profile.email}
                 </div>
               )}
               {profile.location && (
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
+                <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                  <svg className="w-4 h-4 text-[var(--text-muted)]" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
                   {profile.location}
                 </div>
               )}
@@ -218,83 +218,83 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
           {/* Social Icons */}
           <div className="header-actions flex gap-2 items-center">
             {profile.socials?.github && (
-              <a 
+              <a
                 href={profile.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer text-gray-600 hover:text-gray-900"
+                className="p-2 rounded-lg hover:bg-[var(--bg-card)] cursor-pointer text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               >
                 <Github size={18} />
               </a>
             )}
 
             {profile.socials?.linkedin && (
-              <a 
+              <a
                 href={profile.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer text-gray-600 hover:text-gray-900"
+                className="p-2 rounded-lg hover:bg-[var(--bg-card)] cursor-pointer text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               >
                 <Linkedin size={18} />
               </a>
             )}
 
             {profile.socials?.instagram && (
-              <a 
+              <a
                 href={profile.socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer text-gray-600 hover:text-gray-900"
+                className="p-2 rounded-lg hover:bg-[var(--bg-card)] cursor-pointer text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               >
                 <Instagram size={18} />
               </a>
             )}
           </div>
-          
+
           <div ref={menuRef} className="relative">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+              className="p-2 rounded-lg hover:bg-[var(--bg-card)] cursor-pointer text-[var(--text-secondary)]"
             >
               <MoreVertical size={18} />
             </button>
 
             {/* DROPDOWN MENU */}
             {menuOpen && (
-              <div className="absolute right-0 top-8 w-44 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 p-1 space-y-1 z-50">
+              <div className="absolute right-0 top-8 w-44 bg-[var(--bg-card)] rounded-xl shadow-lg border border-[var(--border)] p-1 space-y-1 z-50">
                 <button
                   onClick={() => { setEdit(true); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-[var(--bg-card)] transition cursor-pointer text-[var(--text-primary)]"
                 >
                   Edit profile
                 </button>
                 <button
                   onClick={() => { console.log("share"); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-[var(--bg-card)] transition cursor-pointer text-[var(--text-primary)]"
                 >
                   Share profile
                 </button>
                 <button
                   onClick={() => { setSocialOpen(true); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-[var(--bg-card)] transition cursor-pointer text-[var(--text-primary)]"
                 >
                   Add socials
                 </button>
                 <button
                   onClick={() => { setEditSocialOpen(true); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-[var(--bg-card)] transition cursor-pointer text-[var(--text-primary)]"
                 >
                   Edit socials
                 </button>
                 <button
                   onClick={() => { setCareerModalOpen(true); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-[var(--bg-card)] transition cursor-pointer text-[var(--text-primary)]"
                 >
                   Career vision
                 </button>
                 <button
                   onClick={() => { console.log("settings"); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-[var(--bg-card)] transition cursor-pointer text-[var(--text-primary)]"
                 >
                   Settings
                 </button>
@@ -305,35 +305,35 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       </div>
 
       {/* CAREER VISION SECTION - Always render */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 hover:shadow-md transition mt-6">
+      <div className="bg-[var(--bg-card)] rounded-2xl shadow-sm border border-[var(--border)] p-6 hover:shadow-md transition mt-6">
         <div className="mb-4">
           <div>
-            <span className="text-xs uppercase tracking-wide text-gray-500 dark:text-slate-400 font-medium">YOUR CAREER VISION</span>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-1">
+            <span className="text-xs uppercase tracking-wide text-[var(--text-secondary)] font-medium">YOUR CAREER VISION</span>
+            <h2 className="text-xl font-semibold text-[var(--text-primary)] mt-1">
               {profile.careerVision?.aspiration || "NA"}
             </h2>
           </div>
         </div>
 
-        <div className="border-t border-gray-200 dark:border-slate-700 pt-4">
+        <div className="border-t border-[var(--divider)] pt-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <label className="text-sm text-gray-500 dark:text-slate-400 block mb-1">What you're growing into right now</label>
-              <p className="font-medium text-gray-900 dark:text-gray-100">
+              <label className="text-sm text-[var(--text-secondary)] block mb-1">What you're growing into right now</label>
+              <p className="font-medium text-[var(--text-primary)]">
                 {profile.careerVision?.currentAim || "NA"}
               </p>
             </div>
 
             <div>
-              <label className="text-sm text-gray-500 dark:text-slate-400 block mb-1">The space you want to grow in</label>
-              <p className="font-medium text-gray-900 dark:text-gray-100">
+              <label className="text-sm text-[var(--text-secondary)] block mb-1">The space you want to grow in</label>
+              <p className="font-medium text-[var(--text-primary)]">
                 {profile.careerVision?.field || "NA"}
               </p>
             </div>
 
             <div>
-              <label className="text-sm text-gray-500 dark:text-slate-400 block mb-1">Inspired by</label>
-              <p className="font-medium text-gray-900 dark:text-gray-100">
+              <label className="text-sm text-[var(--text-secondary)] block mb-1">Inspired by</label>
+              <p className="font-medium text-[var(--text-primary)]">
                 {profile.careerVision?.inspiration || "NA"}
               </p>
             </div>
@@ -348,12 +348,12 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
           <ProfileStats profile={profile} />
 
           {/* SKILLS */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 hover:shadow-md transition">
+          <div className="bg-[var(--bg-card)] rounded-2xl shadow-sm border border-[var(--border)] p-6 hover:shadow-md transition">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100">Skills</h3>
+              <h3 className="font-semibold text-[var(--text-primary)]">Skills</h3>
               <button
                 onClick={() => setSkillsOpen(true)}
-                className="w-8 h-8 rounded-full border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center text-gray-500 dark:text-gray-400"
+                className="w-8 h-8 rounded-full border border-[var(--border)] hover:bg-[var(--bg-card)] flex items-center justify-center text-[var(--text-secondary)]"
                 title="Edit Skills"
               >
                 <Edit3 size={16} />
@@ -373,15 +373,15 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
 
         {/* RIGHT COLUMN (2/3 width) - Experience, Education, and Certification */}
         <div className="lg:col-span-8 space-y-5">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 hover:shadow-md transition">
+          <div className="bg-[var(--bg-card)] rounded-2xl shadow-sm border border-[var(--border)] p-6 hover:shadow-md transition">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100">Experience</h3>
-              <button onClick={() => setExpOpen(true)} className="w-8 h-8 rounded-full border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center text-gray-500 dark:text-gray-400">+</button>
+              <h3 className="font-semibold text-[var(--text-primary)]">Experience</h3>
+              <button onClick={() => setExpOpen(true)} className="w-8 h-8 rounded-full border border-[var(--border)] hover:bg-[var(--bg-card)] flex items-center justify-center text-[var(--text-secondary)]">+</button>
             </div>
 
-            <div className="border-t border-gray-200 dark:border-slate-700 pt-4 space-y-3">
+            <div className="border-t border-[var(--divider)] pt-4 space-y-3">
               {profile.experience?.length === 0 ? (
-                <p className="text-gray-500">Add your experiences</p>
+                <p className="text-[var(--text-secondary)]">Add your experiences</p>
               ) : (
                 profile.experience?.map(exp => (
                   <ExperienceItem
@@ -432,20 +432,20 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
 
           {/* EDUCATION AND CERTIFICATION IN SAME ROW */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 hover:shadow-md transition">
+        <div className="bg-[var(--bg-card)] rounded-2xl shadow-sm border border-[var(--border)] p-6 hover:shadow-md transition">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">Education</h3>
+            <h3 className="font-semibold text-[var(--text-primary)]">Education</h3>
             <button
               onClick={() => setEduOpen(true)}
-              className="w-8 h-8 rounded-full border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center text-gray-500 dark:text-gray-400"
+              className="w-8 h-8 rounded-full border border-[var(--border)] hover:bg-[var(--bg-card)] flex items-center justify-center text-[var(--text-secondary)]"
             >
               +
             </button>
           </div>
 
-          <div className="border-t border-gray-200 dark:border-slate-700 pt-4 space-y-3">
+          <div className="border-t border-[var(--divider)] pt-4 space-y-3">
             {(profile.education || []).length === 0 ? (
-              <p className="text-sm text-gray-500">Add your education</p>
+              <p className="text-sm text-[var(--text-secondary)]">Add your education</p>
             ) : (
               (profile.education || []).map((edu, i) => (
                 <EducationItem
@@ -487,20 +487,20 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 hover:shadow-md transition">
+        <div className="bg-[var(--bg-card)] rounded-2xl shadow-sm border border-[var(--border)] p-6 hover:shadow-md transition">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">Certification</h3>
+            <h3 className="font-semibold text-[var(--text-primary)]">Certification</h3>
             <button
               onClick={() => setCertOpen(true)}
-              className="w-8 h-8 rounded-full border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center text-gray-500 dark:text-gray-400"
+              className="w-8 h-8 rounded-full border border-[var(--border)] hover:bg-[var(--bg-card)] flex items-center justify-center text-[var(--text-secondary)]"
             >
               +
             </button>
           </div>
 
-          <div className="border-t border-gray-200 dark:border-slate-700 pt-4 space-y-3">
+          <div className="border-t border-[var(--divider)] pt-4 space-y-3">
             {(profile.certifications || []).length === 0 ? (
-              <p className="text-sm text-gray-500">Add certifications</p>
+              <p className="text-sm text-[var(--text-secondary)]">Add certifications</p>
             ) : (
               (profile.certifications || []).map((cert, i) => (
                 <CertificationItem
@@ -787,72 +787,72 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
     />
 
     {/* Career Vision Modal */}
-    <div 
+    <div
       className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${careerModalOpen ? 'block' : 'hidden'}`}
       onClick={() => setCareerModalOpen(false)}
     >
-      <div 
-        className="bg-white dark:bg-slate-900 rounded-xl p-6 w-full max-w-md mx-4 shadow-xl"
+      <div
+        className="bg-[var(--bg-card)] rounded-xl p-6 w-full max-w-md mx-4 shadow-xl border border-[var(--border)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Career Vision</h3>
-        
+        <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">Career Vision</h3>
+
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">What Best Describes You?</label>
+            <label className="block text-sm font-medium text-[var(--text-primary)] mb-1">What Best Describes You?</label>
             <input
               type="text"
               value={careerForm.bestDescription}
               onChange={(e) => setCareerForm({...careerForm, bestDescription: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--bg-card)] text-[var(--text-primary)]"
             />
           </div>
-          
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">What Is Your Long-Term Career Aspiration?</label>
+            <label className="block text-sm font-medium text-[var(--text-primary)] mb-1">What Is Your Long-Term Career Aspiration?</label>
             <input
               type="text"
               value={careerForm.aspiration}
               onChange={(e) => setCareerForm({...careerForm, aspiration: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--bg-card)] text-[var(--text-primary)]"
             />
           </div>
-          
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Aspirational Field</label>
+            <label className="block text-sm font-medium text-[var(--text-primary)] mb-1">Aspirational Field</label>
             <input
               type="text"
               value={careerForm.field}
               onChange={(e) => setCareerForm({...careerForm, field: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--bg-card)] text-[var(--text-primary)]"
             />
           </div>
-          
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Who Is Your Inspiration?</label>
+            <label className="block text-sm font-medium text-[var(--text-primary)] mb-1">Who Is Your Inspiration?</label>
             <input
               type="text"
               value={careerForm.inspiration}
               onChange={(e) => setCareerForm({...careerForm, inspiration: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--bg-card)] text-[var(--text-primary)]"
             />
           </div>
-          
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">What Are You Aiming For Right Now?</label>
+            <label className="block text-sm font-medium text-[var(--text-primary)] mb-1">What Are You Aiming For Right Now?</label>
             <input
               type="text"
               value={careerForm.currentAim}
               onChange={(e) => setCareerForm({...careerForm, currentAim: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--bg-card)] text-[var(--text-primary)]"
             />
           </div>
         </div>
-        
+
         <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={() => setCareerModalOpen(false)}
-            className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600"
+            className="px-4 py-2 text-sm font-medium text-[var(--text-primary)] bg-[var(--bg-card)] rounded-lg hover:bg-[var(--bg-card)] border border-[var(--border)]"
           >
             CANCEL
           </button>
