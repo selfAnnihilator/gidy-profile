@@ -19,14 +19,14 @@ const server = http.createServer(app);
 // Enable CORS for both express and socket.io
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:5174"], // Include both ports that might be used
-    methods: ["GET", "POST"],
+    origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:5174", "https://gidy.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   }
 });
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:5174"], // Include both ports that might be used
+  origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:5174", "https://gidy-profile-phi.vercel.app"],
   credentials: true
 }));
 app.use(express.json());
