@@ -19,14 +19,14 @@ const server = http.createServer(app);
 // Enable CORS for both express and socket.io
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:5174"], // Include both ports that might be used
+    origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:5174"], // Include both ports that might be used
     methods: ["GET", "POST"],
     credentials: true
   }
 });
 
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174"], // Include both ports that might be used
+  origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:5174"], // Include both ports that might be used
   credentials: true
 }));
 app.use(express.json());
@@ -57,9 +57,10 @@ io.on("connection", (socket) => {
   });
 });
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGODB_URI || process.env.MONGO_URI)
 .then(() => {
   console.log("MongoDB connected");
-  server.listen(5000, () => console.log("Server running on port 5000"));
+  const PORT = process.env.PORT || 5000;
+  server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 })
 .catch(err => console.log(err));
