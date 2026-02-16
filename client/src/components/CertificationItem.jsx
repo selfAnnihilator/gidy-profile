@@ -38,7 +38,7 @@ export default function CertificationItem({ cert, onDelete, onEdit }) {
   return (
     <div className="
       flex items-start justify-between
-      border-t border-gray-100 my-4
+      pt-4
     ">
       <div className="flex gap-4">
 

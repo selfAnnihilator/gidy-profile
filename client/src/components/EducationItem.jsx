@@ -38,7 +38,7 @@ export default function EducationItem({ edu, onDelete, onEdit }) {
   return (
     <div className="
       flex items-start justify-between
-      border-t border-gray-100 dark:border-[#1f2a3a] my-4
+      pt-4
     ">
       <div className="flex gap-4">
 

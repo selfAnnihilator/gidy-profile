@@ -231,6 +231,48 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
         </div>
       </div>
 
+      {/* CAREER VISION SECTION - Always render */}
+      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 hover:shadow-md transition mt-6">
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-slate-400 font-medium">Your Career Vision</p>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-1">
+              {profile.career?.title || "NA"}
+            </h2>
+          </div>
+          <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-yellow-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 18.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0-13a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+            </svg>
+          </button>
+        </div>
+
+        <div className="border-t border-gray-200 dark:border-slate-700 pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <p className="text-sm text-gray-500 dark:text-slate-400 mb-1">What you're growing into right now</p>
+              <p className="font-medium text-gray-900 dark:text-gray-100">
+                {profile.career?.currentStage || "NA"}
+              </p>
+            </div>
+            
+            <div>
+              <p className="text-sm text-gray-500 dark:text-slate-400 mb-1">The space you want to grow in</p>
+              <p className="font-medium text-gray-900 dark:text-gray-100">
+                {profile.career?.targetDomain || "NA"}
+              </p>
+            </div>
+            
+            <div>
+              <p className="text-sm text-gray-500 dark:text-slate-400 mb-1">Inspired by</p>
+              <p className="font-medium text-gray-900 dark:text-gray-100">
+                {profile.career?.inspiredBy || "NA"}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* MAIN CONTENT GRID - Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* LEFT COLUMN (1/3 width) - Profile Stats and Skills */}
@@ -269,7 +311,7 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
               <button onClick={() => setExpOpen(true)} className="w-8 h-8 rounded-full border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center text-gray-500 dark:text-gray-400">+</button>
             </div>
 
-            <div className="mt-4 space-y-3">
+            <div className="border-t border-gray-200 dark:border-slate-700 pt-4 space-y-3">
               {profile.experience?.length === 0 ? (
                 <p className="text-gray-500">Add your experiences</p>
               ) : (
@@ -319,7 +361,7 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
             </button>
           </div>
 
-          <div className="space-y-3">
+          <div className="border-t border-gray-200 dark:border-slate-700 pt-4 space-y-3">
             {(profile.education || []).length === 0 ? (
               <p className="text-sm text-gray-500">Add your education</p>
             ) : (
@@ -367,7 +409,7 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
             </button>
           </div>
 
-          <div className="space-y-3">
+          <div className="border-t border-gray-200 dark:border-slate-700 pt-4 space-y-3">
             {(profile.certifications || []).length === 0 ? (
               <p className="text-sm text-gray-500">Add certifications</p>
             ) : (
