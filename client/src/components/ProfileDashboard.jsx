@@ -35,6 +35,7 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
   const [skillsOpen, setSkillsOpen] = useState(false);
   const [socialOpen, setSocialOpen] = useState(false);
   const [editSocialOpen, setEditSocialOpen] = useState(false);
+  const [careerModalOpen, setCareerModalOpen] = useState(false);
   const [avatarError, setAvatarError] = useState(false);
   const [editExp, setEditExp] = useState(null); // Track which experience is being edited
   const [editEdu, setEditEdu] = useState(null); // Track which education is being edited
@@ -47,6 +48,14 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
   const expMenuRef = useRef(null);
   const eduMenuRef = useRef(null);
   const certMenuRef = useRef(null);
+
+  const [careerForm, setCareerForm] = useState({
+    bestDescription: "",
+    aspiration: "",
+    field: "",
+    inspiration: "",
+    currentAim: ""
+  });
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -68,16 +77,41 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    setCareerForm({
+      bestDescription: profile?.careerVision?.bestDescription || "",
+      aspiration: profile?.careerVision?.aspiration || "",
+      field: profile?.careerVision?.field || "",
+      inspiration: profile?.careerVision?.inspiration || "",
+      currentAim: profile?.careerVision?.currentAim || ""
+    });
+  }, [profile]);
+
   const fetchProfile = async () => {
     try {
       const res = await API.get("/profile/demo");
-      setProfile({
+      const normalized = {
         ...res.data,
         education: res.data.education || [],
         certifications: res.data.certifications || [],
         experience: res.data.experience || [],
-        skills: res.data.skills || []
-      });
+        skills: res.data.skills || [],
+        careerVision: {
+          bestDescription: res.data.careerVision?.bestDescription || "",
+          aspiration: res.data.careerVision?.aspiration || "",
+          field: res.data.careerVision?.field || "",
+          inspiration: res.data.careerVision?.inspiration || "",
+          currentAim: res.data.careerVision?.currentAim || ""
+        },
+        career: res.data.career || {
+          type: "",
+          aspiration: "",
+          field: "",
+          inspiration: "",
+          currentAim: ""
+        }
+      };
+      setProfile(normalized);
     } catch (e) {
       console.error(e);
     }
@@ -220,6 +254,12 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
                   Edit socials
                 </button>
                 <button
+                  onClick={() => { setCareerModalOpen(true); setMenuOpen(false); }}
+                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                >
+                  Career vision
+                </button>
+                <button
                   onClick={() => { console.log("settings"); setMenuOpen(false); }}
                   className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition cursor-pointer"
                 >
@@ -233,40 +273,35 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
 
       {/* CAREER VISION SECTION - Always render */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 hover:shadow-md transition mt-6">
-        <div className="flex justify-between items-start mb-4">
+        <div className="mb-4">
           <div>
-            <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-slate-400 font-medium">Your Career Vision</p>
+            <span className="text-xs uppercase tracking-wide text-gray-500 dark:text-slate-400 font-medium">YOUR CAREER VISION</span>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-1">
-              {profile.career?.title || "NA"}
+              {profile.careerVision?.aspiration || "NA"}
             </h2>
           </div>
-          <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-yellow-500">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 18.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0-13a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-            </svg>
-          </button>
         </div>
 
         <div className="border-t border-gray-200 dark:border-slate-700 pt-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <p className="text-sm text-gray-500 dark:text-slate-400 mb-1">What you're growing into right now</p>
+              <label className="text-sm text-gray-500 dark:text-slate-400 block mb-1">What you're growing into right now</label>
               <p className="font-medium text-gray-900 dark:text-gray-100">
-                {profile.career?.currentStage || "NA"}
+                {profile.careerVision?.currentAim || "NA"}
               </p>
             </div>
-            
+
             <div>
-              <p className="text-sm text-gray-500 dark:text-slate-400 mb-1">The space you want to grow in</p>
+              <label className="text-sm text-gray-500 dark:text-slate-400 block mb-1">The space you want to grow in</label>
               <p className="font-medium text-gray-900 dark:text-gray-100">
-                {profile.career?.targetDomain || "NA"}
+                {profile.careerVision?.field || "NA"}
               </p>
             </div>
-            
+
             <div>
-              <p className="text-sm text-gray-500 dark:text-slate-400 mb-1">Inspired by</p>
+              <label className="text-sm text-gray-500 dark:text-slate-400 block mb-1">Inspired by</label>
               <p className="font-medium text-gray-900 dark:text-gray-100">
-                {profile.career?.inspiredBy || "NA"}
+                {profile.careerVision?.inspiration || "NA"}
               </p>
             </div>
           </div>
@@ -328,7 +363,14 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
                           education: res.data.education ?? prev.education ?? [],
                           certifications: res.data.certifications ?? prev.certifications ?? [],
                           experience: res.data.experience ?? prev.experience ?? [],
-                          skills: res.data.skills ?? prev.skills ?? []
+                          skills: res.data.skills ?? prev.skills ?? [],
+                          career: res.data.career ?? prev.career ?? {
+                            type: "",
+                            aspiration: "",
+                            field: "",
+                            inspiration: "",
+                            currentAim: ""
+                          }
                         }));
 
                         // Emit socket event to notify other clients
@@ -460,7 +502,28 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       editExp={editExp}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
-        setProfile(res.data);
+        const normalized = {
+          ...res.data,
+          education: res.data.education || [],
+          certifications: res.data.certifications || [],
+          experience: res.data.experience || [],
+          skills: res.data.skills || [],
+          careerVision: {
+            bestDescription: res.data.careerVision?.bestDescription || "",
+            aspiration: res.data.careerVision?.aspiration || "",
+            field: res.data.careerVision?.field || "",
+            inspiration: res.data.careerVision?.inspiration || "",
+            currentAim: res.data.careerVision?.currentAim || ""
+          },
+          career: res.data.career || {
+            type: "",
+            aspiration: "",
+            field: "",
+            inspiration: "",
+            currentAim: ""
+          }
+        };
+        setProfile(normalized);
       }}
     />
 
@@ -474,7 +537,28 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       editEdu={editEdu}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
-        setProfile(res.data);
+        const normalized = {
+          ...res.data,
+          education: res.data.education || [],
+          certifications: res.data.certifications || [],
+          experience: res.data.experience || [],
+          skills: res.data.skills || [],
+          careerVision: {
+            bestDescription: res.data.careerVision?.bestDescription || "",
+            aspiration: res.data.careerVision?.aspiration || "",
+            field: res.data.careerVision?.field || "",
+            inspiration: res.data.careerVision?.inspiration || "",
+            currentAim: res.data.careerVision?.currentAim || ""
+          },
+          career: res.data.career || {
+            type: "",
+            aspiration: "",
+            field: "",
+            inspiration: "",
+            currentAim: ""
+          }
+        };
+        setProfile(normalized);
       }}
     />
 
@@ -488,7 +572,28 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       editCert={editCert}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
-        setProfile(res.data);
+        const normalized = {
+          ...res.data,
+          education: res.data.education || [],
+          certifications: res.data.certifications || [],
+          experience: res.data.experience || [],
+          skills: res.data.skills || [],
+          careerVision: {
+            bestDescription: res.data.careerVision?.bestDescription || "",
+            aspiration: res.data.careerVision?.aspiration || "",
+            field: res.data.careerVision?.field || "",
+            inspiration: res.data.careerVision?.inspiration || "",
+            currentAim: res.data.careerVision?.currentAim || ""
+          },
+          career: res.data.career || {
+            type: "",
+            aspiration: "",
+            field: "",
+            inspiration: "",
+            currentAim: ""
+          }
+        };
+        setProfile(normalized);
       }}
     />
 
@@ -498,7 +603,28 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       profile={profile}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
-        setProfile(res.data);
+        const normalized = {
+          ...res.data,
+          education: res.data.education || [],
+          certifications: res.data.certifications || [],
+          experience: res.data.experience || [],
+          skills: res.data.skills || [],
+          careerVision: {
+            bestDescription: res.data.careerVision?.bestDescription || "",
+            aspiration: res.data.careerVision?.aspiration || "",
+            field: res.data.careerVision?.field || "",
+            inspiration: res.data.careerVision?.inspiration || "",
+            currentAim: res.data.careerVision?.currentAim || ""
+          },
+          career: res.data.career || {
+            type: "",
+            aspiration: "",
+            field: "",
+            inspiration: "",
+            currentAim: ""
+          }
+        };
+        setProfile(normalized);
       }}
     />
 
@@ -508,7 +634,28 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       profile={profile}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
-        setProfile(res.data);
+        const normalized = {
+          ...res.data,
+          education: res.data.education || [],
+          certifications: res.data.certifications || [],
+          experience: res.data.experience || [],
+          skills: res.data.skills || [],
+          careerVision: {
+            bestDescription: res.data.careerVision?.bestDescription || "",
+            aspiration: res.data.careerVision?.aspiration || "",
+            field: res.data.careerVision?.field || "",
+            inspiration: res.data.careerVision?.inspiration || "",
+            currentAim: res.data.careerVision?.currentAim || ""
+          },
+          career: res.data.career || {
+            type: "",
+            aspiration: "",
+            field: "",
+            inspiration: "",
+            currentAim: ""
+          }
+        };
+        setProfile(normalized);
       }}
     />
 
@@ -518,9 +665,117 @@ export default function ProfileDashboard({ profile, setProfile, setEdit }) {
       profile={profile}
       fetchProfile={async () => {
         const res = await API.get("/profile/demo");
-        setProfile(res.data);
+        const normalized = {
+          ...res.data,
+          education: res.data.education || [],
+          certifications: res.data.certifications || [],
+          experience: res.data.experience || [],
+          skills: res.data.skills || [],
+          careerVision: {
+            bestDescription: res.data.careerVision?.bestDescription || "",
+            aspiration: res.data.careerVision?.aspiration || "",
+            field: res.data.careerVision?.field || "",
+            inspiration: res.data.careerVision?.inspiration || "",
+            currentAim: res.data.careerVision?.currentAim || ""
+          },
+          career: res.data.career || {
+            type: "",
+            aspiration: "",
+            field: "",
+            inspiration: "",
+            currentAim: ""
+          }
+        };
+        setProfile(normalized);
       }}
     />
+
+    {/* Career Vision Modal */}
+    <div 
+      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${careerModalOpen ? 'block' : 'hidden'}`}
+      onClick={() => setCareerModalOpen(false)}
+    >
+      <div 
+        className="bg-white dark:bg-slate-900 rounded-xl p-6 w-full max-w-md mx-4 shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Career Vision</h3>
+        
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">What Best Describes You?</label>
+            <input
+              type="text"
+              value={careerForm.bestDescription}
+              onChange={(e) => setCareerForm({...careerForm, bestDescription: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">What Is Your Long-Term Career Aspiration?</label>
+            <input
+              type="text"
+              value={careerForm.aspiration}
+              onChange={(e) => setCareerForm({...careerForm, aspiration: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Aspirational Field</label>
+            <input
+              type="text"
+              value={careerForm.field}
+              onChange={(e) => setCareerForm({...careerForm, field: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Who Is Your Inspiration?</label>
+            <input
+              type="text"
+              value={careerForm.inspiration}
+              onChange={(e) => setCareerForm({...careerForm, inspiration: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">What Are You Aiming For Right Now?</label>
+            <input
+              type="text"
+              value={careerForm.currentAim}
+              onChange={(e) => setCareerForm({...careerForm, currentAim: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+            />
+          </div>
+        </div>
+        
+        <div className="flex justify-end gap-3 mt-6">
+          <button
+            onClick={() => setCareerModalOpen(false)}
+            className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600"
+          >
+            CANCEL
+          </button>
+          <button
+            onClick={() => {
+              setProfile(prev => ({
+                ...prev,
+                careerVision: careerForm
+              }));
+              
+              setCareerModalOpen(false);
+            }}
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+          >
+            UPDATE
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 );
 }
